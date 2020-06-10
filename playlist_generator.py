@@ -17,17 +17,24 @@ REDIRECT_URI = 'http://localhost:8888/callback'
 
 
 def create_playlist(res, sp_obj, user):
+    # print(res['items'][0]['track']['id'])
+    # return
+    # Adds top tracks to track_ids
     track_ids = []
     for i, item in enumerate(res['items']):
-        track_ids.append(item['id'])
+        track_ids.append(item['track']['id'])
 
+    # Creates playlist with name MM-DD
     playlist_name = date.today().strftime('%m-%d')
     sp_obj.user_playlist_create(user, playlist_name)
+
+    # Gets playlist id of created playlist
     playlists = sp_obj.user_playlists(user)
     for playlist in playlists['items']:
         if playlist['name'] == playlist_name:
             playlist_id = playlist['id']
-
+            break
+    # Adds 50 recently played tracks to the playlist
     sp_obj.user_playlist_add_tracks(user, playlist_id, track_ids)
     print('Successfully created playlist', playlist_name)
 
@@ -54,8 +61,7 @@ if __name__ == '__main__':
         #     for i, item in enumerate(results['items']):
         #         print(i, item['name'], '//', item['artists'][0]['name'])
         #     print()
-        results = sp.current_user_top_tracks(time_range='short_term', limit=50)
+        results = sp.current_user_recently_played(limit=50)
         create_playlist(results, sp, username)
-
     else:
         print("Can't get token for", username)
