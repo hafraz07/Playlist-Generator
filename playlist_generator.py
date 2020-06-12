@@ -6,7 +6,6 @@
 
 
 import sys
-import requests
 import spotipy
 import spotipy.util as util
 from datetime import date
@@ -19,13 +18,19 @@ REDIRECT_URI = 'http://localhost:8888/callback'
 def create_playlist(res, sp_obj, user):
     # print(res['items'][0]['track']['id'])
     # return
+    playlist_name = date.today().strftime('%m-%d')
+    # Checks if playlist already exists
+    playlists = sp_obj.user_playlists(user)
+    for playlist in playlists['items']:
+        if playlist['name'] == playlist_name:
+            print('Playlist', playlist_name, 'already exists')
+            return
     # Adds top tracks to track_ids
     track_ids = []
     for i, item in enumerate(res['items']):
         track_ids.append(item['track']['id'])
 
     # Creates playlist with name MM-DD
-    playlist_name = date.today().strftime('%m-%d')
     sp_obj.user_playlist_create(user, playlist_name)
 
     # Gets playlist id of created playlist
@@ -43,17 +48,15 @@ if __name__ == '__main__':
         username = sys.argv[1]
     else:
         print("Whoops, need your username!")
-        print("usage: python user_playlists.py [username]")
+        print("usage: python playlist_generator.py [username]")
         sys.exit()
 
-    scopes = 'user-read-email playlist-modify-public user-top-read \
-    user-read-recently-played user-read-currently-playing'
+    scopes = 'playlist-modify-public user-top-read user-read-recently-played'
 
     token = util.prompt_for_user_token(username, scopes, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
 
     if token:
         sp = spotipy.Spotify(auth=token)
-        sp.trace = False
         # ranges = ['short_term', 'medium_term', 'long_term']
         # for range in ranges:
         #     print("range:", range)
