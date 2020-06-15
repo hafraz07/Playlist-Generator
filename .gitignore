@@ -1,4 +1,5 @@
 #cache files
 .cache-*
-.DS-Store
+.DS_Store
+/web/.DS_Store
 /web/__pycache__/*
