@@ -45,9 +45,6 @@ if __name__ == '__main__':
     auth_manager = spotipy.oauth2.SpotifyOAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET,
     redirect_uri=REDIRECT_URI, scope=scopes, username=username)
     sp = spotipy.Spotify(client_credentials_manager=auth_manager)
-    # token = util.prompt_for_user_token(username, scopes, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
-    # if token:
-    #     sp = spotipy.Spotify(auth=token)
         # ranges = ['short_term', 'medium_term', 'long_term']
         # for range in ranges:
         #     print("range:", range)
