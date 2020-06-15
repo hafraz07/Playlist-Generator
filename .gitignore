@@ -1,2 +1,3 @@
 #cache files
 .cache-*
+web/__pycache__/*
