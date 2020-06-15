@@ -18,7 +18,11 @@ def index():
 
 @app.route("/middle")
 def middle():
-    return render_template("middle.html", username=USERNAME)
+    auth_manager = spotipy.oauth2.SpotifyOAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET,
+    redirect_uri=REDIRECT_URI, scope=scopes, username=USERNAME)
+    sp_obj = spotipy.Spotify(client_credentials_manager=auth_manager)
+    user = sp_obj.me()['display_name']
+    return render_template("middle.html", username=user)
 
 @app.route("/create", methods=["POST", "GET"])
 def create_playlist():
@@ -56,7 +60,6 @@ def create_playlist():
 
 @app.route("/auth", methods=["POST"])
 def auth():
-    USERNAME = request.form.get("user")
     auth_manager = spotipy.oauth2.SpotifyOAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET,
     redirect_uri=REDIRECT_URI, scope=scopes)
     auth_url = auth_manager.get_authorize_url()
