@@ -1,3 +1,4 @@
 #cache files
 .cache-*
-web/__pycache__/*
+.DS-Store
+/web/__pycache__/*
