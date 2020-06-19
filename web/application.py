@@ -4,8 +4,8 @@ from flask import Flask, render_template, request, redirect, session
 
 app = Flask(__name__)
 
-CLIENT_ID = '760e54f503eb4aaa88285c1605e6ca92'
-CLIENT_SECRET = '24c97aeebcf24966a65962679ac27f3e'
+CLIENT_ID = ''
+CLIENT_SECRET = ''
 REDIRECT_URI = 'http://127.0.0.1:5000/callback'
 scopes = 'playlist-modify-public user-top-read user-read-recently-played'
 USERNAME = 'x'

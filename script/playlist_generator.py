@@ -2,10 +2,10 @@ import sys
 import spotipy
 from datetime import date
 
-CLIENT_ID = '760e54f503eb4aaa88285c1605e6ca92'
-CLIENT_SECRET = '24c97aeebcf24966a65962679ac27f3e'
+CLIENT_ID = ''
+CLIENT_SECRET = ''
 REDIRECT_URI = 'http://localhost:8888/callback'
-
+USERNAME = 'x'
 def create_playlist(res, sp_obj):
     playlist_name = date.today().strftime('%m-%d')
     # Checks if playlist already exists
@@ -34,16 +34,16 @@ def create_playlist(res, sp_obj):
     print('Successfully created playlist', playlist_name)
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        username = sys.argv[1]
-    else:
-        print("Usage: python3 playlist_generator.py <username>")
-        sys.exit()
+    # if len(sys.argv) > 1:
+    #     username = sys.argv[1]
+    # else:
+    #     print("Usage: python3 playlist_generator.py <username>")
+    #     sys.exit()
 
     scopes = 'playlist-modify-public user-top-read user-read-recently-played'
 
     auth_manager = spotipy.oauth2.SpotifyOAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET,
-    redirect_uri=REDIRECT_URI, scope=scopes, username=username)
+    redirect_uri=REDIRECT_URI, scope=scopes, username=USERNAME)
     sp = spotipy.Spotify(client_credentials_manager=auth_manager)
         # ranges = ['short_term', 'medium_term', 'long_term']
         # for range in ranges:

@@ -2,4 +2,4 @@
 .cache-*
 .DS_Store
 /web/.DS_Store
-/web/__pycache__/*
+/web/__pycache__/
